@@ -3,11 +3,6 @@
 
     let util = new MineSweeperUtil();
 
-    let STATS = {
-        played: undefined,
-        won: 0
-    };
-
     function initControls() {
         // populate game options
         let $select = $('#game-options');
@@ -21,7 +16,7 @@
         }
 
         // bind game generation handlers
-        $("#generate-game").bind('click', function(e) {
+        $("#generate-game").bind('click', function(e) {       
            generateNewGame();
         });
     };
@@ -34,26 +29,12 @@
         util.Log(`generate new ${size.width}x${size.height} game`);  
 
         // create new game state
-        let gameState = new GameState(size);
+        let gameState = new GameState(size, util);
 
         // create new ui
         let game = new GameGrid($('#grid'), gameState, util);
         game.Start();
-
-        if (STATS.played >= 0) {
-            STATS.played++;
-        }
-        else {
-            STATS.played = 0;
-        }
-
-        renderStats();
     };
-
-    function renderStats() {
-        if (STATS.played >= 0)
-            $("#stats").html(`played: ${STATS.played}, won: ${STATS.won}, lost: ${STATS.played - STATS.won}`);
-    }
 
     (function init() {
         initControls(); 

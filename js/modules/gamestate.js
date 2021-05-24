@@ -8,6 +8,8 @@ class GameCell {
         this._isMine = false;
         this._isRevealed = false;
         this._game = game;
+        this.i = i;
+        this.j = j;
     }
 
     // getters
@@ -23,6 +25,12 @@ class GameCell {
     get IsRevealed() {
         return this._isRevealed;
     }  
+    get rowIndex() {
+        return this.i;
+    }
+    get colIndex() {
+        return this.j;
+    }
     
     // methods
     IncrementAdjacentMineCount() {
@@ -40,7 +48,7 @@ class GameCell {
 }
 
 class GameState {
-    constructor(size) {
+    constructor(size, logutil) {
 
         // state
         this._lookup = {};
@@ -50,7 +58,7 @@ class GameState {
         this._size = size; 
         this._gameCompletionState = GAME_COMPLETION_STATES.started;
         this._onCellStateChange = undefined;
-        this._util =  new MineSweeperUtil();
+        this._util = logutil;
  
         // init, starting with cells with generic values
         for(let i = 0; i < this._size.height; i++) {
@@ -83,35 +91,7 @@ class GameState {
             let rowIndex = _.floor(mines[k]/this._size.width);
             let colIndex = mines[k] % this._size.width;
 
-            // generate 8 adjacent co-ords, clamped to in-bounds
-            let otherCoords = [];
-
-            if (rowIndex - 1 >= 0) {
-                if (colIndex - 1 >= 0) {
-                    otherCoords.push({x: colIndex-1, y:rowIndex-1});
-                }
-
-                otherCoords.push({x: colIndex, y:rowIndex-1});
-
-                if (colIndex + 1 < this._size.width)
-                    otherCoords.push({x: colIndex+1, y:rowIndex-1});
-            }
-            
-            if (colIndex - 1 >= 0) 
-                otherCoords.push({x: colIndex-1, y:rowIndex});
-
-            if (colIndex + 1 < this._size.width)
-                otherCoords.push({x: colIndex+1, y:rowIndex});
-
-            if (rowIndex + 1 < this._size.height) {
-                if (colIndex - 1 >= 0) 
-                    otherCoords.push({x: colIndex-1, y:rowIndex+1});
-
-                otherCoords.push({x: colIndex, y:rowIndex+1});
-
-                if (colIndex + 1 < this._size.width)
-                    otherCoords.push({x: colIndex+1, y:rowIndex+1});
-            }
+            let otherCoords = this.GenerateAdjacentCells(rowIndex, colIndex);
 
             // foreach adjacent, if it isnt also a mine, increment its adjacent mine count
             for (let j = 0; j < otherCoords.length; j++) {
@@ -146,6 +126,40 @@ class GameState {
         this._onCellStateChange = fn;
     }
 
+    GenerateAdjacentCells(rowIndex, colIndex) {
+        // generate 8 adjacent co-ords, clamped to in-bounds
+        let otherCoords = [];
+
+        if (rowIndex - 1 >= 0) {
+            if (colIndex - 1 >= 0) {
+                otherCoords.push({x: colIndex-1, y:rowIndex-1});
+            }
+
+            otherCoords.push({x: colIndex, y:rowIndex-1});
+
+            if (colIndex + 1 < this._size.width)
+                otherCoords.push({x: colIndex+1, y:rowIndex-1});
+        }
+        
+        if (colIndex - 1 >= 0) 
+            otherCoords.push({x: colIndex-1, y:rowIndex});
+
+        if (colIndex + 1 < this._size.width)
+            otherCoords.push({x: colIndex+1, y:rowIndex});
+
+        if (rowIndex + 1 < this._size.height) {
+            if (colIndex - 1 >= 0) 
+                otherCoords.push({x: colIndex-1, y:rowIndex+1});
+
+            otherCoords.push({x: colIndex, y:rowIndex+1});
+
+            if (colIndex + 1 < this._size.width)
+                otherCoords.push({x: colIndex+1, y:rowIndex+1});
+        }
+
+        return otherCoords;
+    }
+
     CellById(cellId) {
         let cell = this._lookup[cellId];
 
@@ -164,15 +178,38 @@ class GameState {
         });
     }
 
+    AttemptAutoFill(cell) {
+        this._util.Log('attempting autofill');
+
+        let autoFills = this.GetAdjacentNonMineNonRevealedCells(cell);
+        let that = this;
+
+        _.forEach(autoFills, function(c) {
+            that.SelectCell(c);
+        });
+    }
+
+    GetAdjacentNonMineNonRevealedCells(cell) {
+        let that = this;
+        let adjCellIndices = this.GenerateAdjacentCells(cell.rowIndex, cell.colIndex);
+        let adjCells = [];
+        _.forEach(adjCellIndices, function(c) {
+            let adjacentCell = that.CellById(`${c.y + "_" + c.x}`);
+
+            if (!adjacentCell.IsMine && !adjacentCell.IsRevealed)
+                adjCells.push(adjacentCell);
+        })
+
+        return adjCells;
+    }
+
     FireCellStateChange (changedCell) {
         if (this._onCellStateChange)
             this._onCellStateChange(changedCell);
     }
-
-    SelectCell(cellId) {
-        this._util.Log(`select cell id ${cellId} in game with id ${this._id}`);
-
-        let cell = this.CellById(cellId);       
+    
+    SelectCell(cell) {
+        this._util.Log(`select cell id ${cell.Id} in game with id ${this._id}`);
 
         if (!this.GameIsPlayable) {
             // don't do anything
@@ -192,7 +229,21 @@ class GameState {
                 this._util.Log(`player failed in game with id ${this._id}. revealing all mines`);
                 this.RevealAllMines();
                 this.GameCompletionState = GAME_COMPLETION_STATES.failed;
-            }                      
+
+                return;
+            }    
+            
+            // otherwise, cell is not a mine, so attempt to autofill if the cell is blank
+            if (cell.AdjacentMineCount == 0) 
+            {
+               this.AttemptAutoFill(cell);
+            }
         }
+    }
+
+    SelectCellById(cellId) {
+        let cell = this.CellById(cellId);       
+
+        this.SelectCell(cell);
     }
 };

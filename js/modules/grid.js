@@ -50,7 +50,7 @@ class GameGrid {
         // add the main ui click handler
         let that = this;
         this.$rootElement.on('click', 'td.cell', function(e) {
-            that.gameState.SelectCell(e.currentTarget.id);
+            that.gameState.SelectCellById(e.currentTarget.id);
         });
     }
 
