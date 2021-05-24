@@ -69,13 +69,18 @@ class GameState {
         this._mineCells = [];
         this._size = size; 
         this._gameCompletionState = GAME_COMPLETION_STATES.started;
-        this._onCellStateChange = undefined;
         this._util = logutil;
 
         // track cleared cells vs total cells needed to win
         this._totalCellCountToWin = size.width*size.height - size.mines;
         this._currentCellCount = 0;
+
+        // for diabling the game
         this._gameDisabled = false;
+
+        // callback funcs
+        this._onCellStateChange = undefined;
+        this._onGameCompletionStateChange = undefined;
  
         // init, starting with cells with generic values
         for(let i = 0; i < this._size.height; i++) {
@@ -149,6 +154,10 @@ class GameState {
 
     set GameDisabled(disabled) {
         this._gameDisabled = disabled;
+    }
+
+    set OnGameCompletionStateChange(fn) {
+        this._onGameCompletionStateChange = fn;
     }
 
     GenerateAdjacentCells(rowIndex, colIndex) {
@@ -233,6 +242,11 @@ class GameState {
             this._onCellStateChange(changedCell);
     }
 
+    FireGameCompletionStateChange() {
+        if (this._onGameCompletionStateChange)
+            this._onGameCompletionStateChange(this._gameCompletionState);
+    }
+
     MarkCell(cell) {
         this._util.Log(`mark cell id ${cell.Id} in game with id ${this._id}`);
 
@@ -273,11 +287,12 @@ class GameState {
             this.FireCellStateChange(cell);
 
             if (cell.IsMine) {
-                // oh ohh
+                // oh ohh, lost
                 this.GameCompletionState = GAME_COMPLETION_STATES.failed;
-                this.RevealAllMines(false);
+                this.RevealAllMines();
                 this.GameDisabled = true;
                 this._util.Log(`player has lost!`);
+                this.FireGameCompletionStateChange();
 
                 return;
             }   
@@ -288,10 +303,11 @@ class GameState {
                 // check if player has won
                 if (this._currentCellCount == this._totalCellCountToWin) {
                     // yay
-                    this._util.Log(`player has won!`);
                     this.GameCompletionState = GAME_COMPLETION_STATES.completed;
                     this.RevealAllMines();                
                     this.GameDisabled = true;
+                    this._util.Log(`player has won!`);
+                    this.FireGameCompletionStateChange();
                     return;
                 }
             } 
@@ -308,5 +324,24 @@ class GameState {
         let cell = this.CellById(cellId);       
 
         this.SelectCell(cell);
+    }
+
+    TriggerAutoWin() {
+        if (!this.GameIsPlayable)
+            return;
+
+        let allCells = _.flatten(this._cells);
+        let that = this;
+        _.forEach(allCells, function(c) {
+            if (!c.IsMine)
+                that.SelectCell(c);
+        })
+    }
+
+    TriggerAutoLose() {
+        if (!this.GameIsPlayable)
+            return;
+            
+        this.SelectCell(this._mineCells[0]);
     }
 };

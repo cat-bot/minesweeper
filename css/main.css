@@ -8,6 +8,15 @@
   padding: 30px;
 }
 
+.app-container .grid-container .grid .end-state {
+  text-align: center;
+}
+
+.app-container .grid-container .grid .end-state img {
+  margin: 20px auto;
+  width: 350px;
+}
+
 .app-container .grid-container .grid table {
   border: 2px solid #a2a2a2;
   border-collapse: collapse;
@@ -71,6 +80,10 @@
 
 .app-container .grid-container .grid table .cell.open-5 {
   color: purple;
+}
+
+.app-container .grid-container .grid table .cell.open-6, .app-container .grid-container .grid table .cell.open-7, .app-container .grid-container .grid table .cell.open-8 {
+  color: black;
 }
 
 .app-container .control-container {

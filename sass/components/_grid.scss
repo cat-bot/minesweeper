@@ -7,6 +7,14 @@
         .grid {
             padding: 30px;
 
+            .end-state {
+                text-align: center;
+                img {
+                    margin: 20px auto;
+                    width: 350px;
+                }
+            }
+
             table {
                 border: 2px solid $grid-border;
                 border-collapse: collapse;
@@ -71,6 +79,10 @@
 
                     &.open-5 {
                         color: $count-cell-five-foreground;
+                    }
+
+                    &.open-6, &.open-7, &.open-8 {
+                        color: black;
                     }
                 }
             }

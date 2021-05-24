@@ -95,8 +95,8 @@ class GameGrid {
         // render
         this.$rootElement.html(`<table><tbody>${stack.join("")}</tbody></table>`); 
 
-        // add cell state change callback for rendering individual cells
         let that = this;
+        // add cell state change callback for rendering individual cells
         this.gameState.OnCellStateChange = function(cell) {
             // re-render the cell
             that.logUtil.Log(`render cell ${cell.Id} in game with id ${that.gameState.Id}`);
@@ -108,6 +108,15 @@ class GameGrid {
                 .removeClass()
                 .addClass(`cell ${cellClass}`) 
                 .html(cellContent);
+        };
+
+        // game completion state handler
+        this.gameState.OnGameCompletionStateChange = function(gameCompletionState) {
+            if (gameCompletionState == GAME_COMPLETION_STATES.completed)
+                that.$rootElement.append("<div class='end-state'><img src='./img/win.gif'></img></div>");
+            
+            if (gameCompletionState == GAME_COMPLETION_STATES.failed)
+                that.$rootElement.append("<div class='end-state'><img src='./img/lose.gif'></img></div>");
         };
 
         // bind handlers

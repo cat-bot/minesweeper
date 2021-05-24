@@ -31,6 +31,14 @@
         // create new game state
         let gameState = new GameState(size, util);
 
+        $("#win-game").bind('click', function(e) {       
+            gameState.TriggerAutoWin();
+        });
+
+        $("#lose-game").bind('click', function(e) {       
+            gameState.TriggerAutoLose();
+        });
+
         // create new ui
         let game = new GameGrid($('#grid'), gameState, util);
         game.Start();
