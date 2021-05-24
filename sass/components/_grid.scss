@@ -1,0 +1,70 @@
+.app-container {
+    .grid-container {
+        background-color:$light-gray;
+        width: $container-width;
+        margin: 0 auto;
+
+        .grid {
+            padding: 30px;
+
+            table {
+                border: 2px solid $grid-border;
+                border-collapse: collapse;
+                margin: 0 auto;
+                text-align: center;
+                background-color: $clear-cell-background; 
+
+                .cell {
+                    height: 24px;
+                    width: 24px; 
+                    border: 1px solid $grid-border; 
+                    padding: 0;
+                    
+
+                    .cell-inner {
+                        height: 100%;
+                        width: 100%;
+                        border: 1px solid white;
+                    }
+
+                    &.hidden {
+                        background-color: $hidden-cell-background;     
+                        
+                        .cell-inner {
+                            border: 1px solid;
+                            border-top-color: lighten($hidden-cell-background, 30%);
+                            border-left-color: lighten($hidden-cell-background, 30%);
+                            border-right-color: darken($hidden-cell-background, 30%);
+                            border-bottom-color: darken($hidden-cell-background, 30%);
+                        }
+                    }
+                    
+                    &.mine {
+                        background-color: $mine-cell-background; 
+                    }
+
+                    &.open-1 {
+                        color: $count-cell-one-foreground;
+                    }
+
+                    &.open-2 {
+                        color: $count-cell-two-foreground;
+                    }
+
+                    &.open-3 {
+                        color: $count-cell-three-foreground;
+                    }
+
+                    &.open-4 {
+                        color: $count-cell-four-foreground;
+                    }
+
+                    &.open-5 {
+                        color: $count-cell-five-foreground;
+                    }
+                }
+            }
+           
+        }
+    }  
+}
