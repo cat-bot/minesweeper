@@ -41,8 +41,16 @@
   border-bottom-color: #7f7f7f;
 }
 
+.app-container .grid-container .grid table .cell.hidden.marked .cell-inner:before {
+  content: "^";
+}
+
 .app-container .grid-container .grid table .cell.mine {
   background-color: red;
+}
+
+.app-container .grid-container .grid table .cell.mine.won {
+  background-color: #ebebeb;
 }
 
 .app-container .grid-container .grid table .cell.open-1 {

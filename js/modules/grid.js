@@ -3,17 +3,22 @@ class GameGrid {
         this.$rootElement = $rootElement;
         this.gameState = gameState;  
         this.logUtil = logUtil;
-        this.stack = [];
     }
 
     // methods
 
     GetCellClass(cell) {
-        if (!cell.IsRevealed)
-            return "hidden";
+        if (!cell.IsRevealed) 
+        {
+            if (cell.IsMarked)
+                return "hidden marked";
 
-        if (cell.IsMine)
-            return "mine";
+            return "hidden";
+        }
+
+        if (cell.IsMine) {
+            return this.gameState.GameIsWon ? "mine won" : "mine";
+        }
         
         if (cell.AdjacentMineCount > 0) 
             return `open-${cell.AdjacentMineCount}`;
@@ -42,21 +47,40 @@ class GameGrid {
         return `<td class='cell ${cellClass}' id='${cellId}'>${cellContent}</td>`;
     }
 
-    RemoveClickHandlers() {
-        this.$rootElement.off('click');
+    RemoveHandlers() {
+        this.$rootElement.find('table')
+            .off('contextmenu')
+            .off('click');
     }
 
-    AddClickHandlers() {
-        // add the main ui click handler
+    AddHandlers() {
         let that = this;
-        this.$rootElement.on('click', 'td.cell', function(e) {
-            that.gameState.SelectCellById(e.currentTarget.id);
+
+        // add suppress context menu
+        this.$rootElement.find('table').on('contextmenu', 'td.cell', function (e) {
+            if (e.which == 3) {
+                // right mouse
+                that.gameState.MarkCellbyId(e.currentTarget.id);
+                return false;
+            }
+        });
+
+        // add select handller
+        this.$rootElement.find('table').on('click', 'td.cell', function(e) {
+            if(e.which == 1)
+            {
+                // left-mouse
+                that.gameState.SelectCellById(e.currentTarget.id);
+                return;
+            }
         });
     }
 
     Start() {
-        // remove any existing click handlers
-        this.RemoveClickHandlers();
+        // remove any existing handlers
+        this.RemoveHandlers();
+
+        let stack = [];
 
         // template html cell content
         for(let i = 0; i < this.gameState.Size.height; i++) {
@@ -65,11 +89,11 @@ class GameGrid {
                 rowHtml += this.GetInitialCellHtml( i + "_" + j);
             }
             rowHtml += "</tr>";
-            this.stack.push(rowHtml);
+            stack.push(rowHtml);
         }
 
         // render
-        this.$rootElement.html(`<table><tbody>${this.stack.join("")}</tbody></table>`); 
+        this.$rootElement.html(`<table><tbody>${stack.join("")}</tbody></table>`); 
 
         // add cell state change callback for rendering individual cells
         let that = this;
@@ -87,6 +111,6 @@ class GameGrid {
         };
 
         // bind handlers
-        this.AddClickHandlers();
+        this.AddHandlers();
     }
 }

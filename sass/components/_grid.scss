@@ -37,10 +37,20 @@
                             border-right-color: darken($hidden-cell-background, 30%);
                             border-bottom-color: darken($hidden-cell-background, 30%);
                         }
+
+                        &.marked {
+                            .cell-inner:before {
+                                content: "^";
+                            }
+                        }
                     }
                     
                     &.mine {
                         background-color: $mine-cell-background; 
+
+                        &.won {
+                            background-color: $clear-cell-background;   
+                        }
                     }
 
                     &.open-1 {

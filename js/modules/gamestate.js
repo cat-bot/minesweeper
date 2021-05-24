@@ -7,6 +7,7 @@ class GameCell {
         this._adjacentMineCount = 0;
         this._isMine = false;
         this._isRevealed = false;
+        this._isMarked = false;
         this._game = game;
         this.i = i;
         this.j = j;
@@ -24,7 +25,10 @@ class GameCell {
     }
     get IsRevealed() {
         return this._isRevealed;
-    }  
+    } 
+    get IsMarked() {
+        return this._isMarked;
+    } 
     get rowIndex() {
         return this.i;
     }
@@ -42,9 +46,17 @@ class GameCell {
             this._isMine = true;
     }
     SetIsRevealed() {
-        if (this._game.GameIsPlayable) 
+        if (this._game.GameIsPlayable) {
             this._isRevealed = true;
-    }   
+
+            // no need for it to be marked any more
+            this._isMarked = false;
+        }
+    }  
+    SetIsMarked() {
+        if (this._game.GameIsPlayable) 
+            this._isMarked = true;
+    } 
 }
 
 class GameState {
@@ -59,6 +71,11 @@ class GameState {
         this._gameCompletionState = GAME_COMPLETION_STATES.started;
         this._onCellStateChange = undefined;
         this._util = logutil;
+
+        // track cleared cells vs total cells needed to win
+        this._totalCellCountToWin = size.width*size.height - size.mines;
+        this._currentCellCount = 0;
+        this._gameDisabled = false;
  
         // init, starting with cells with generic values
         for(let i = 0; i < this._size.height; i++) {
@@ -107,7 +124,11 @@ class GameState {
 
     // getters
     get GameIsPlayable() {
-        return this._gameCompletionState == GAME_COMPLETION_STATES.started;
+        return !this._gameDisabled;
+    }
+
+    get GameIsWon() {
+        return this._gameCompletionState == GAME_COMPLETION_STATES.completed;
     }
 
     get Size() {
@@ -124,6 +145,10 @@ class GameState {
 
     set OnCellStateChange(fn) {
         this._onCellStateChange = fn;
+    }
+
+    set GameDisabled(disabled) {
+        this._gameDisabled = disabled;
     }
 
     GenerateAdjacentCells(rowIndex, colIndex) {
@@ -207,13 +232,36 @@ class GameState {
         if (this._onCellStateChange)
             this._onCellStateChange(changedCell);
     }
+
+    MarkCell(cell) {
+        this._util.Log(`mark cell id ${cell.Id} in game with id ${this._id}`);
+
+        if (!this.GameIsPlayable) {
+            // don't do anything
+            return;
+        }
+
+        if (!cell.IsRevealed) {
+
+            cell.SetIsMarked();
+
+            // trigger it to re-render
+            this.FireCellStateChange(cell);
+        }
+    }
+
+    MarkCellbyId(cellId) {
+        let cell = this.CellById(cellId);       
+
+        this.MarkCell(cell);
+    }
     
     SelectCell(cell) {
         this._util.Log(`select cell id ${cell.Id} in game with id ${this._id}`);
 
         if (!this.GameIsPlayable) {
             // don't do anything
-            this._util.Log(`game with id ${this._id} is failed`);
+            this._util.Log(`game has already been ${this._gameCompletionState == GAME_COMPLETION_STATES.completed ? "won!" : "lost!"}`);
             return;
         }
 
@@ -226,14 +274,29 @@ class GameState {
 
             if (cell.IsMine) {
                 // oh ohh
-                this._util.Log(`player failed in game with id ${this._id}. revealing all mines`);
-                this.RevealAllMines();
                 this.GameCompletionState = GAME_COMPLETION_STATES.failed;
+                this.RevealAllMines(false);
+                this.GameDisabled = true;
+                this._util.Log(`player has lost!`);
 
                 return;
-            }    
+            }   
+            else {
+                // yay, you cleared one
+                this._currentCellCount++;
+
+                // check if player has won
+                if (this._currentCellCount == this._totalCellCountToWin) {
+                    // yay
+                    this._util.Log(`player has won!`);
+                    this.GameCompletionState = GAME_COMPLETION_STATES.completed;
+                    this.RevealAllMines();                
+                    this.GameDisabled = true;
+                    return;
+                }
+            } 
             
-            // otherwise, cell is not a mine, so attempt to autofill if the cell is blank
+            // otherwise, cell is not a mine, player has not yet won, so attempt to autofill if the cell is blank
             if (cell.AdjacentMineCount == 0) 
             {
                this.AttemptAutoFill(cell);
