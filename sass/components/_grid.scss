@@ -19,15 +19,50 @@
                 text-align: center;
                 background-color: $clear-cell-background; 
 
-                .cell {
-                    height: $cell-size;
-                    width: $cell-size; 
-                    min-width: $cell-size;
-                    min-height: $cell-size;
+                &.beginner {
+                    .cell {
+                        height: $large-cell-size;
+                        width: $large-cell-size; 
+                        min-width: $large-cell-size;
+                        min-height: $large-cell-size;
+                    }
+
+                    .cell-inner {
+                        padding-top:4px;
+                    }
+                }
+
+                &.intermediate {
+                    .cell {
+                        height: $cell-size;
+                        width: $cell-size; 
+                        min-width: $cell-size;
+                        min-height: $cell-size;
+                    }
+
+                    .cell-inner {
+                        font-size:0.8em;
+                    }
+                }
+
+                &.expert {
+                    .cell {
+                        height: $small-cell-size;
+                        width: $small-cell-size; 
+                        min-width: $small-cell-size;
+                        min-height: $small-cell-size;
+                    }
+                    
+                    .cell-inner {
+                        font-size:0.7em;
+                    }
+                }
+
+
+                .cell {                   
                     border: 1px solid $grid-border; 
                     padding: 0;
                     
-
                     .cell-inner {
                         height: 100%;
                         width: 100%;
@@ -47,16 +82,24 @@
 
                         &.marked {
                             .cell-inner:before {
-                                content: "^";
+                                font-weight: bold;
+                                content: "!";
                             }
                         }
                     }
                     
                     &.mine {
-                        background-color: $mine-cell-background; 
+                        background-color: $clear-cell-background;
 
-                        &.won {
-                            background-color: $clear-cell-background;   
+                        @keyframes redpulse {
+                            0% {background-color: $clear-cell-background;}
+                            100% {background-color: $mine-cell-background;}
+                        }
+                        
+                        &.triggered {
+                            background-color: $mine-cell-background;  
+                            animation-name: redpulse;
+                            animation-duration: 0.15s;
                         }
                     }
 

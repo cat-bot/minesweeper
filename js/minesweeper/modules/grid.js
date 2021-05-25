@@ -17,7 +17,7 @@ class GameGrid {
         }
 
         if (cell.IsMine) {
-            return this.gameState.GameIsWon ? "mine won" : "mine";
+            return cell.IsLosingMine ? "mine triggered" : "mine ";
         }
         
         if (cell.AdjacentMineCount > 0) 
@@ -27,7 +27,6 @@ class GameGrid {
     }
 
     GetCellContent(cell) {
-        
         let cellGlyph = cell.IsRevealed ? 
         (cell.IsMine ? 
             "💣" : 
@@ -93,7 +92,7 @@ class GameGrid {
         }
 
         // render
-        this.$rootElement.html(`<table><tbody>${stack.join("")}</tbody></table>`); 
+        this.$rootElement.html(`<table class='${this.gameState.Size.label}'><tbody>${stack.join("")}</tbody></table>`); 
 
         let that = this;
         // add cell state change callback for rendering individual cells

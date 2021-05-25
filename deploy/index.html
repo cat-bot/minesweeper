@@ -8,24 +8,26 @@
         <link href="css/main.css" type="text/css" rel="stylesheet"/>
     </head>
     <body>
-        <div class='app-container container-lg'>
-            <div class='control-container row'>
-                <div class='col-12 col-sm-4 p-1 gx-0 p-sm-3 g-sm-2'>
-                    <select id='game-options' class='form-select'></select>
-                </div>
-                <div class='col-12 col-sm-8 p-1 gx-0 p-sm-3 g-sm-2'>
-                    <div class='btn-group'>
-                        <input type="button" id='generate-game' value='new game' class='btn btn-outline-primary'></input>
-                        <input type="button" id='win-game' value='auto win' class='btn btn-outline-secondary'></input>
-                        <input type="button" id='lose-game' value='auto lose' class='btn btn-outline-secondary'></input>
-                        <input type="button" id='help-btn' value='?' class='btn btn-outline-info'></input>
+        <div class='app-main'>
+            <div class='app-container container-sm'>
+                <div class='control-container row'>
+                    <div class='col-12 col-sm-4 p-1 p-sm-3 g-sm-2'>
+                        <select id='game-options' class='form-select'></select>
+                    </div>
+                    <div class='col-12 col-sm-8 p-1 p-sm-3 g-sm-2'>
+                        <div class='btn-group'>
+                            <input type="button" id='generate-game' value='new game' class='btn btn-outline-primary'></input>
+                            <input type="button" id='win-game' value='auto win' class='btn btn-outline-secondary'></input>
+                            <input type="button" id='lose-game' value='auto lose' class='btn btn-outline-secondary'></input>
+                            <input type="button" id='help-btn' value='?' class='btn btn-outline-info'></input>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class='grid-container row'>
-                <div id='grid' class='grid col-12 user-select-none py-4 px-0'></div>
-            </div>
-        </div>       
+                <div class='grid-container row'>
+                    <div id='grid' class='grid col-12 user-select-none py-4 px-0'></div>
+                </div>
+            </div> 
+        </div>      
     </body>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>

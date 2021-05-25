@@ -6,6 +6,7 @@ class GameCell {
         this._id = `${i + "_" + j}`;
         this._adjacentMineCount = 0;
         this._isMine = false;
+        this._isLosingMine = false;
         this._isRevealed = false;
         this._isMarked = false;
         this._game = game;
@@ -22,6 +23,9 @@ class GameCell {
     }
     get IsMine() {
         return this._isMine;
+    }
+    get IsLosingMine() {
+        return this._isLosingMine;
     }
     get IsRevealed() {
         return this._isRevealed;
@@ -44,6 +48,10 @@ class GameCell {
     SetIsMine() {
         if (this._game.GameIsPlayable)
             this._isMine = true;
+    }
+    SetIsLosingMine() {
+        if (this._game.GameIsPlayable)
+            this._isLosingMine = true;
     }
     SetIsRevealed() {
         if (this._game.GameIsPlayable) {
@@ -288,6 +296,9 @@ class GameState {
 
             if (cell.IsMine) {
                 // oh ohh, lost
+
+                // mark this mine as the one hit
+                cell.SetIsLosingMine();
                 this.GameCompletionState = GAME_COMPLETION_STATES.failed;
                 this.RevealAllMines();
                 this.GameDisabled = true;
