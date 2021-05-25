@@ -8,6 +8,16 @@
         <link href="css/main.css" type="text/css" rel="stylesheet"/>
     </head>
     <body>
+        <header class="navbar navbar-expand-md navbar-dark bd-navbar">
+            <nav class="container-sm flex-wrap flex-md-nowrap" aria-label="Main navigation">
+                <a class="navbar-brand p-0 me-2" href="/">
+                    <h1>&#625;</h1>
+                </a>
+                <h1 class="navbar-brand p-0 me-2">
+                    meinsweeper
+                </h1>         
+            </nav>
+          </header>
         <div class='app-main'>
             <div class='app-container container-sm'>
                 <div class='control-container row'>
@@ -15,12 +25,12 @@
                         <select id='game-options' class='form-select'></select>
                     </div>
                     <div class='col-12 col-sm-8 p-1 p-sm-3 g-sm-2'>
+                        <input type="button" id='generate-game' value='new game' class='btn btn-outline-primary'></input>
                         <div class='btn-group'>
-                            <input type="button" id='generate-game' value='new game' class='btn btn-outline-primary'></input>
                             <input type="button" id='win-game' value='auto win' class='btn btn-outline-secondary'></input>
                             <input type="button" id='lose-game' value='auto lose' class='btn btn-outline-secondary'></input>
-                            <input type="button" id='help-btn' value='?' class='btn btn-outline-info'></input>
                         </div>
+                        <input type="button" id='help-btn' value='?' class='btn btn-outline-info float-end'></input>
                     </div>
                 </div>
                 <div class='grid-container row'>

@@ -1,4 +1,23 @@
 .bd-navbar {
-    padding: .75rem 0;
-    background-color: #7952b3;
+    background-color: $app-theme-colour;
+
+    #login-ui-container {
+        #login-profile {
+            height:40px;    
+            border:1px solid $app-theme-accent-colour-light;
+
+            &:hover {
+                border-color:darken($app-theme-accent-colour-light, 10%);
+            }
+        }
+
+        #login-prompt {
+            height:100%;
+            background-color: $app-theme-accent-colour-light;
+
+            &:hover {
+                background-color: darken($app-theme-accent-colour-light, 10%);
+            }
+        }
+    }
 }

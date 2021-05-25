@@ -1,6 +1,23 @@
 .bd-navbar {
-  padding: .75rem 0;
-  background-color: #7952b3;
+  background-color: #49424b;
+}
+
+.bd-navbar #login-ui-container #login-profile {
+  height: 40px;
+  border: 1px solid #e4e0e6;
+}
+
+.bd-navbar #login-ui-container #login-profile:hover {
+  border-color: #cbc4cf;
+}
+
+.bd-navbar #login-ui-container #login-prompt {
+  height: 100%;
+  background-color: #e4e0e6;
+}
+
+.bd-navbar #login-ui-container #login-prompt:hover {
+  background-color: #cbc4cf;
 }
 
 .app-container .grid-container {

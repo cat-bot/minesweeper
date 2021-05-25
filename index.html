@@ -8,16 +8,43 @@
         <link href="css/main.css" type="text/css" rel="stylesheet"/>
     </head>
     <body>
-        <header class="navbar navbar-expand-md navbar-dark bd-navbar">
-            <nav class="container-sm flex-wrap flex-md-nowrap" aria-label="Main navigation">
-                <a class="navbar-brand p-0 me-2" href="/">
-                    <h1>&#625;</h1>
+        <header class="navbar bd-navbar p-2">
+            <nav class="container-sm flex-wrap flex-md-nowrap" aria-label="home navigation">
+                <a class="navbar-brand text-white p-0 me-2 d-flex align-items-center" href="/">
+                    <h1>&#625;<span class='d-none d-sm-inline'>inesweeper</span></h1>
                 </a>
-                <h1 class="navbar-brand p-0 me-2">
-                    meinsweeper
-                </h1>         
+                <div id='login-ui-container'>
+                    <div id='login-prompt' title='sign in' class='rounded-circle navbar-nav d-flex align-items-center p-1'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                        </svg>
+                    </div> 
+                    <img id='login-profile' src='' alt='' class='rounded-circle navbar-nav d-flex align-items-center d-none'></img> 
+                </div>
             </nav>
           </header>
+
+          <!-- <header>
+            <div class="px-3 py-2 bg-dark text-white">
+              <div class="container">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                  <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                    <h1>&#625;<span class='d-none d-sm-inline'>inesweeper</span></h1>
+                  </a>
+        
+                  <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">                 
+                    <li>
+                      <a href="#" class="nav-link text-white">
+                        <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"></use></svg>
+                        Customers
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </header> -->
+
         <div class='app-main'>
             <div class='app-container container-sm'>
                 <div class='control-container row'>
@@ -41,9 +68,19 @@
     </body>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+
+    <script src="js/firebase_auth.js" ></script>
+
     <script src="js/minesweeper/modules/constants.js" ></script>
     <script src="js/minesweeper/modules/util.js" ></script>
     <script src="js/minesweeper/modules/gamestate.js" ></script>
     <script src="js/minesweeper/modules/grid.js" ></script>
     <script src="js/minesweeper/minesweeper.js" ></script>
+
 </html>

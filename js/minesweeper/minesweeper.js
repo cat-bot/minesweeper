@@ -2,8 +2,9 @@
     "use strict";
 
     let util = new MineSweeperUtil();
+    let g_auth = new GoogleAuthHandler();
 
-    function initControls() {
+    function InitControls() {
         // populate game options
         let $select = $('#game-options');
 
@@ -16,12 +17,30 @@
         }
 
         // bind game generation handlers
-        $("#generate-game").bind('click', function(e) {       
-           generateNewGame();
+        $("#generate-game").on('click', function(e) {       
+           GenerateNewGame();
+        });
+
+        g_auth.OnSignIn = function(googleUser) {
+            let $loginUI = $("#login-ui-container");
+
+            $loginUI
+                .find("#login-prompt")
+                .toggleClass('d-none')
+                .end()
+                .find("#login-profile")
+                .prop('src', googleUser.User.photoURL)
+                .prop('alt', 'logged in as ' + googleUser.User.displayName)
+                .toggleClass('d-none');
+        } 
+
+        // bind log in
+        $("#login-prompt").on('click', function(e) {     
+            g_auth.GoogleSignInPopup();
         });
     };
 
-    function generateNewGame() {
+    function GenerateNewGame() {
         let $select = $('#game-options');
         let selected = $select.find("option:selected").val();
         let size = GRID_SIZES[selected];
@@ -31,11 +50,11 @@
         // create new game state
         let gameState = new GameState(size, util);
 
-        $("#win-game").bind('click', function(e) {       
+        $("#win-game").off('click').on('click', function(e) {       
             gameState.TriggerAutoWin();
         });
 
-        $("#lose-game").bind('click', function(e) {       
+        $("#lose-game").off('click').on('click', function(e) {       
             gameState.TriggerAutoLose();
         });
 
@@ -44,8 +63,8 @@
         game.Start();
     };
 
-    (function init() {
-        initControls(); 
+    (function StartMineSweeper() {
+        InitControls(); 
     })();
 
 })(jQuery);
