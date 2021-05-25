@@ -1,11 +1,8 @@
 .app-container {
     .grid-container {
         background-color:$light-gray;
-        width: $container-width;
-        margin: 0 auto;
 
         .grid {
-            padding: 30px;
 
             .end-state {
                 text-align: center;
@@ -23,8 +20,10 @@
                 background-color: $clear-cell-background; 
 
                 .cell {
-                    height: 24px;
-                    width: 24px; 
+                    height: $cell-size;
+                    width: $cell-size; 
+                    min-width: $cell-size;
+                    min-height: $cell-size;
                     border: 1px solid $grid-border; 
                     padding: 0;
                     

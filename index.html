@@ -4,24 +4,30 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Mine Sweeper</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
         <link href="css/main.css" type="text/css" rel="stylesheet"/>
     </head>
     <body>
-        <div class='app-container'>
-            <div class='control-container'>
-                <div class='controls'>
-                    <span>Start a new game:</span>
-                    <select id='game-options'></select>
-                    <input type="button" id='generate-game' value='Create!'></input>
-                    <input type="button" id='win-game' value='auto win'></input>
-                    <input type="button" id='lose-game' value='auto lose'></input>
-                    <span>&#x1F408;</span>
+        <div class='app-main'>
+            <div class='app-container container-sm'>
+                <div class='control-container row'>
+                    <div class='col-12 col-sm-4 p-1 p-sm-3 g-sm-2'>
+                        <select id='game-options' class='form-select'></select>
+                    </div>
+                    <div class='col-12 col-sm-8 p-1 p-sm-3 g-sm-2'>
+                        <div class='btn-group'>
+                            <input type="button" id='generate-game' value='new game' class='btn btn-outline-primary'></input>
+                            <input type="button" id='win-game' value='auto win' class='btn btn-outline-secondary'></input>
+                            <input type="button" id='lose-game' value='auto lose' class='btn btn-outline-secondary'></input>
+                            <input type="button" id='help-btn' value='?' class='btn btn-outline-info'></input>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class='grid-container'>
-                <div id='grid' class='grid'></div>
-            </div>
-        </div>       
+                <div class='grid-container row'>
+                    <div id='grid' class='grid col-12 user-select-none py-4 px-0'></div>
+                </div>
+            </div> 
+        </div>      
     </body>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
