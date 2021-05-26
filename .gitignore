@@ -9,6 +9,7 @@ firebase-debug.*.log*
 
 # deploy directory
 deploy/
+js/
 
 # Firebase cache
 .firebase/

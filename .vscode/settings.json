@@ -8,7 +8,7 @@
        {
            "extensionName": ".min.css",
            "format": "compressed",
-           "savePath": "/dist/css"
+           "savePath": "/css"
        }
    ],
    "liveSassCompile.settings.excludeList": [
@@ -19,5 +19,14 @@
    "liveSassCompile.settings.autoprefix": [
        "> 1%",
        "last 2 versions"
-   ]
+   ],
+
+   "emeraldwalk.runonsave": {
+    "commands": [
+        {
+            "match": "src\\\\js\\\\*",
+            "isAsync": false,
+            "cmd": "webpack"
+        }
+    ]}
 }
