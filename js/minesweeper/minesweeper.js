@@ -1,9 +1,6 @@
 (function($) {
     "use strict";
 
-    let util = new MineSweeperUtil();
-    let g_auth = new GoogleAuthHandler();
-
     function InitControls() {
         // populate game options
         let $select = $('#game-options');
@@ -20,27 +17,10 @@
         $("#generate-game").on('click', function(e) {       
            GenerateNewGame();
         });
-
-        g_auth.OnSignIn = function(googleUser) {
-            let $loginUI = $("#login-ui-container");
-
-            $loginUI
-                .find("#login-prompt")
-                .toggleClass('d-none')
-                .end()
-                .find("#login-profile")
-                .prop('src', googleUser.User.photoURL)
-                .prop('alt', 'logged in as ' + googleUser.User.displayName)
-                .toggleClass('d-none');
-        } 
-
-        // bind log in
-        $("#login-prompt").on('click', function(e) {     
-            g_auth.GoogleSignInPopup();
-        });
     };
 
     function GenerateNewGame() {
+        let util = new MineSweeperUtil();
         let $select = $('#game-options');
         let selected = $select.find("option:selected").val();
         let size = GRID_SIZES[selected];

@@ -2,22 +2,30 @@
     background-color: $app-theme-colour;
 
     #login-ui-container {
-        #login-profile {
-            height:40px;    
-            border:1px solid $app-theme-accent-colour-light;
+        background-color: $app-theme-accent-colour-light;
+        height: 45px;
+        width: 45px;
 
-            &:hover {
-                border-color:darken($app-theme-accent-colour-light, 10%);
+        -moz-transition: all .1s ease-in;
+        -o-transition: all .1s ease-in;
+        -webkit-transition: all .1s ease-in; 
+        transition: all .1s ease-in;
+
+        &:hover {
+            background-color:$app-theme-accent-colour-semilight;
+            color:$app-theme-accent-colour-light;
+        }
+
+        #login-profile {
+            height:100%;   
+
+            img {
+                height: 90%;
             }
         }
 
         #login-prompt {
             height:100%;
-            background-color: $app-theme-accent-colour-light;
-
-            &:hover {
-                background-color: darken($app-theme-accent-colour-light, 10%);
-            }
         }
     }
 }

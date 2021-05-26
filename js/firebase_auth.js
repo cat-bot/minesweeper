@@ -7,9 +7,6 @@ var firebaseConfig = {
     appId: "1:703933725685:web:2eebce5b1d7a16efba7ebc"
 };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
 // AUTH
 class GoogleUser {
     constructor(user, token) {
@@ -27,82 +24,52 @@ class GoogleUser {
 }
 
 class GoogleAuthHandler {
-  constructor() {
+  constructor(onSignIn, onSignOut) {
+
+    this.onSignIn = onSignIn;
+    this.onSignOut = onSignOut;
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // use only goog
     this.g_provider = new firebase.auth.GoogleAuthProvider();
     this.g_provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
     this.g_provider.setCustomParameters({
       'login_hint': 'user@example.com'
     });
-  }
-    
-  set OnSignIn(fn) {
-    this.signInHandler = fn;
+
+    // set a handler for when tokens are recieved
+    firebase.auth().onAuthStateChanged(user=>{
+        if (user) {
+            this.FireOnSignInHandler(user);
+        } else {
+          // this can fire when there is no logged in user on load
+            this.FireOnSignOutHandler();
+        }
+    })
   }
 
   // methods
 
-  FireOnLogInHandler(accessToken, user) {
-    if (this.signInHandler) {
-      this.signInHandler(new GoogleUser(user, accessToken));
+  FireOnSignInHandler(oAuthUser) {
+    if (this.onSignIn) {
+      this.onSignIn(oAuthUser);
+    }
+  }
+
+  FireOnSignOutHandler() {
+    if (this.onSignOut) {
+      this.onSignOut();
     }
   }
 
   GoogleSignInPopup() {
-      firebase.auth()
-        .signInWithPopup(this.g_provider)
-        .then((result) => {
-
-          var credential = result.credential;
-    
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          var token = credential.accessToken;
-
-          // The signed-in user info.
-          var user = result.user;       
-          this.FireOnLogInHandler(token, user);
-
-        }).catch((error) => {
-
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // The email of the user's account used.
-          var email = error.email;
-          // The firebase.auth.AuthCredential type that was used.
-          var credential = error.credential;
-          // ...
-        });
-      // [END auth_google_signin_popup]
+      firebase.auth().signInWithPopup(this.g_provider);
   }
 
-  GoogleSignInRedirectResult() {
-    
-    firebase.auth().signInWithRedirect(this.g_provider);
-    
-    firebase.auth()
-      .getRedirectResult()
-      .then((result) => {
-        if (result.credential) {
-          /** @type {firebase.auth.OAuthCredential} */
-          var credential = result.credential;
-  
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          var token = credential.accessToken;
-          // ...
-        }
-        // The signed-in user info.
-        var user = result.user;
-      }).catch((error) => {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
-      });
-    // [END auth_google_signin_redirect_result]
+  GoogleSignOut() {
+      firebase.auth().signOut();
   }
 }
 
