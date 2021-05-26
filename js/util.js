@@ -1,4 +1,4 @@
-class MineSweeperUtil {
+class AppUtil {
     constructor() {
 
     }

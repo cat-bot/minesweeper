@@ -20,7 +20,7 @@
     };
 
     function GenerateNewGame() {
-        let util = new MineSweeperUtil();
+        let util = new AppUtil();
         let $select = $('#game-options');
         let selected = $select.find("option:selected").val();
         let size = GRID_SIZES[selected];
@@ -43,7 +43,7 @@
         game.Start();
     };
 
-    (function StartMineSweeper() {
+    (function() {
         InitControls(); 
     })();
 

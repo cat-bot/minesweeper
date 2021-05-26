@@ -7,22 +7,6 @@ var firebaseConfig = {
     appId: "1:703933725685:web:2eebce5b1d7a16efba7ebc"
 };
 
-// AUTH
-class GoogleUser {
-    constructor(user, token) {
-      this.user = user;
-      this.token = token;
-    }
-
-    get Token() {
-      return this.token;
-    }
-
-    get User() {
-      return this.user;
-    }
-}
-
 class GoogleAuthHandler {
   constructor(onSignIn, onSignOut) {
 
@@ -64,11 +48,16 @@ class GoogleAuthHandler {
     }
   }
 
-  GoogleSignInPopup() {
+  SignInPopup() {
       firebase.auth().signInWithPopup(this.g_provider);
   }
 
-  GoogleSignOut() {
+  SignInRedirect() {
+    firebase.auth().signInWithRedirect(this.g_provider);
+  }
+
+  SignOut() {
       firebase.auth().signOut();
   }
 }
+

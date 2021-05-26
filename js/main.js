@@ -40,11 +40,12 @@
 
     // bind log in
     $("#login-prompt").on('click', function(e) {     
-        g_auth.GoogleSignInPopup();
+        //g_auth.SignInPopup();
+        g_auth.SignInRedirect();
     });
 
     $("#login-profile").on('click', function(e) {     
-        g_auth.GoogleSignOut();
+        g_auth.SignOut();
     });
 
 })(jQuery);
