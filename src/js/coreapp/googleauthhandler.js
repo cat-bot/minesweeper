@@ -11,7 +11,7 @@ export class GoogleAuthHandler {
     this.g_provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
     this.g_provider.setCustomParameters({
       'login_hint': 'user@example.com'
-    });
+    }); 
 
     // set a handler for when tokens are recieved
     firebase.auth().onAuthStateChanged(user=>{

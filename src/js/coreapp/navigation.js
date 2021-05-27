@@ -44,7 +44,6 @@ import { Minesweeper } from '../minesweeper/minesweeperapp.js';
 
     // bind log in
     $("#login-prompt").on('click', function(e) {     
-        //g_auth.SignInPopup();
         g_auth.SignInRedirect();
     });
 

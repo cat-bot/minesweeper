@@ -10,9 +10,6 @@ firebase-debug.*.log*
 # deploy directory, for prod content
 deploy/
 
-# local dev content, but compiled from elsewhere
-css/
-
 # Firebase cache
 .firebase/
 
