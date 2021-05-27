@@ -3,30 +3,59 @@ import { MINESWEEPER_GRID_SIZES } from './minesweeperconstants.js';
 import { MinesweeperGameState } from './minesweepergamestate.js';
 import { MinesweeperGameGrid } from './minesweepergrid.js';
 
-let Minesweeper = (function($) {
-    "use strict";
+export class Minesweeper {
+    constructor($, rootContainerSelector) {
+        this.optionsSelector = '#game-options';
+        this.newGameSelector = '#generate-game';
+        this.winSelector = '#win-game';
+        this.loseSelector = '#lose-game';
+        this.gridSelector = '#grid';
+        this.rootContainerSelector = rootContainerSelector;
 
-    function InitControls() {
-        // populate game options
-        let $select = $('#game-options');
+        this.template = `
+            <div class='app-container container-sm'>
+                <div class='control-container row'>
+                <div class='col-12 col-sm-4 p-1 p-sm-3 g-sm-2'>
+                    <select id='game-options' class='form-select'></select>
+                </div>
+                <div class='col-12 col-sm-8 p-1 p-sm-3 g-sm-2'>
+                    <input type="button" id='generate-game' value='new game' class='btn btn-outline-primary'></input>
+                    <div class='btn-group'>
+                        <input type="button" id='win-game' value='auto win' class='btn btn-outline-secondary'></input>
+                        <input type="button" id='lose-game' value='auto lose' class='btn btn-outline-secondary'></input>
+                    </div>
+                </div>
+            </div>
+            <div class='grid-container row'>
+                <div id='grid' class='grid col-12 user-select-none py-4 px-0'></div>
+            </div>
+        `;
+    }
+        
+    // methods
+    InitControls() {
+        $(this.rootContainerSelector).html(this.template);
+        
+        let $select = $(this.optionsSelector);
 
         for(let key in MINESWEEPER_GRID_SIZES)
         {
             $select.append($('<option>', { 
-                    value: key,
-                    text : `${key} (${MINESWEEPER_GRID_SIZES[key].width}x${MINESWEEPER_GRID_SIZES[key].height}, ${MINESWEEPER_GRID_SIZES[key].mines} mines)` 
-                }));
+                value: key,
+                text : `${key} (${MINESWEEPER_GRID_SIZES[key].width}x${MINESWEEPER_GRID_SIZES[key].height}, ${MINESWEEPER_GRID_SIZES[key].mines} mines)` 
+            }));
         }
 
         // bind game generation handlers
-        $("#generate-game").on('click', function(e) {       
-           GenerateNewGame();
+        let that = this;
+        $(this.newGameSelector).on('click', function(e) {       
+            that.GenerateNewGame();
         });
     }
 
-    function GenerateNewGame() {
+    GenerateNewGame() {
         let util = new AppUtil();
-        let $select = $('#game-options');
+        let $select = $(this.optionsSelector);
         let selected = $select.find("option:selected").val();
         let size = MINESWEEPER_GRID_SIZES[selected];
         
@@ -35,23 +64,19 @@ let Minesweeper = (function($) {
         // create new game state
         let gameState = new MinesweeperGameState(size, util);
 
-        $("#win-game").off('click').on('click', function(e) {       
+        $(this.winSelector).off('click').on('click', function(e) {       
             gameState.TriggerAutoWin();
         });
 
-        $("#lose-game").off('click').on('click', function(e) {       
+        $(this.loseSelector).off('click').on('click', function(e) {       
             gameState.TriggerAutoLose();
         });
 
         // create new ui
-        let game = new MinesweeperGameGrid($('#grid'), gameState, util);
-        game.Start();
+        new MinesweeperGameGrid($(this.gridSelector), gameState, util).Start();
     }
 
-    (function() {
-        InitControls(); 
-    })();
-
-})(jQuery);
-
-export default Minesweeper;
+    Start() {
+        this.InitControls();
+    }
+}

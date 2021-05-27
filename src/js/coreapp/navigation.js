@@ -1,54 +1,52 @@
 import { GoogleAuthHandler } from './googleauthhandler.js';
-import { Minesweeper } from '../minesweeper/minesweeperapp.js';
 
-(function($) {
-    "use strict";
+export class Navigation {
+    constructor($) {
+        this.loginUI = $("#login-ui-container");
+        let that = this;
 
-    // wire up navigation & login
-    let $loginUI = $("#login-ui-container");
+        // bind log in
+        $("#login-prompt").on('click', function(e) {     
+            that.auth.SignInRedirect();
+        });
 
-    function onSignIn(oAuthUser) {
-        $loginUI
-            .find("#login-prompt")
-            .toggleClass('d-none')
-            .end()
-            .find("#login-profile")
-            .find('img')
-            .prop('src', oAuthUser.photoURL)
-            .prop('alt', 'logged in as ' + oAuthUser.displayName)
-            .end()
-            .toggleClass('d-none')
-            .end()
-            .attr('data-signed-in', 'true');
+        $("#login-profile").on('click', function(e) {     
+            that.auth.SignOut();
+        });
+
+        this._onSignIn = function(oAuthUser) {
+            that.loginUI
+                .find("#login-prompt")
+                .toggleClass('d-none')
+                .end()
+                .find("#login-profile")
+                .find('img')
+                .prop('src', oAuthUser.photoURL)
+                .prop('alt', 'logged in as ' + oAuthUser.displayName)
+                .end()
+                .toggleClass('d-none')
+                .end()
+                .attr('data-signed-in', 'true');
+        };
+
+        this._onSignOut = function() {
+            if (that.loginUI.attr('data-signed-in') == 'false')
+                return;
+    
+            that.loginUI
+                .find("#login-profile")
+                .find('img')
+                .prop('src', '')
+                .prop('alt', '')
+                .end()
+                .toggleClass('d-none')
+                .end()
+                .find("#login-prompt")
+                .toggleClass('d-none')
+                .end()
+                .attr('data-signed-in', 'false');
+        };
+
+        this.auth = new GoogleAuthHandler(this._onSignIn, this._onSignOut);
     }
-
-    function onSignOut() {
-        if ($loginUI.attr('data-signed-in') == 'false')
-            return;
-
-        $loginUI
-            .find("#login-profile")
-            .find('img')
-            .prop('src', '')
-            .prop('alt', '')
-            .end()
-            .toggleClass('d-none')
-            .end()
-            .find("#login-prompt")
-            .toggleClass('d-none')
-            .end()
-            .attr('data-signed-in', 'false');
-    }
-  
-    let g_auth = new GoogleAuthHandler(onSignIn, onSignOut);
-
-    // bind log in
-    $("#login-prompt").on('click', function(e) {     
-        g_auth.SignInRedirect();
-    });
-
-    $("#login-profile").on('click', function(e) {     
-        g_auth.SignOut();
-    });
-
-})(jQuery);
+}

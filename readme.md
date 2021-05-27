@@ -12,7 +12,7 @@
 # install firebase cli
 npm install -g firebase-tools
 
-# run local hosting
+# run local hosting (or use Live Server extension)
 firebase serve --only hosting
 
 # authenticate in order to deploy. only needs to be done once
