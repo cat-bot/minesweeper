@@ -1,7 +1,8 @@
+import { EnvConfig } from './config/config-APPTARGET.js';
+
 export class AppUtil {
     constructor() {
-        // defined elsewhere
-        this._log = AppEnv === "dev";
+        this._log = EnvConfig.env === "dev";
     }
     
     Log(entry) {
@@ -9,4 +10,3 @@ export class AppUtil {
             console.log(entry);
     }
 }
-

@@ -26,9 +26,10 @@ firebase deploy
 
 ```npm
 # install web pack things
-npm install -g webpack webpack-cli
+npm install -g webpack-cli
 
 # from the root of the project, install webpack-merge
+npm install --save-dev webpack
 npm install --save-dev webpack-merge
 
 # run the bundling

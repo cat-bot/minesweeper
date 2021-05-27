@@ -1,4 +1,4 @@
-import { AppUtil } from '../coreapp/util.js';
+import { AppUtil } from '../coreapp/apputil.js';
 import { MINESWEEPER_GRID_SIZES } from './minesweeperconstants.js';
 import { MinesweeperGameState } from './minesweepergamestate.js';
 import { MinesweeperGameGrid } from './minesweepergrid.js';

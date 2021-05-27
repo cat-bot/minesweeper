@@ -1,3 +1,5 @@
+import { AppFirebaseConfig } from './config/config-APPTARGET.js';
+
 export class GoogleAuthHandler {
   constructor(onSignIn, onSignOut) {
     this.onSignIn = onSignIn;
