@@ -36,6 +36,12 @@ npm install --save-dev webpack-merge
 webpack
 ```
 
+* [sass]()
+
+```npm
+npm install -g sass
+```
+
 #### vscode extensions
 
 * [Live Sass Compiler]() - click 'watch sass' to transpile on save
