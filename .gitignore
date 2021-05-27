@@ -7,9 +7,12 @@ yarn-error.log*
 firebase-debug.log*
 firebase-debug.*.log*
 
-# deploy directory
+# deploy directory, for prod content
 deploy/
+
+# local dev content, but compiled from elsewhere
 js/
+css/
 
 # Firebase cache
 .firebase/

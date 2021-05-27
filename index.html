@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Mine Sweeper</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-        <link href="css/app.min.css" type="text/css" rel="stylesheet"/>
+        <link href="css/app.css" type="text/css" rel="stylesheet"/>
     </head>
     <body>
         <header class="navbar bd-navbar p-2">
@@ -51,6 +51,8 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
     <script type='text/javascript'>
+        // [[APPENVSTART]]
+        let AppEnv = "dev";
         let AppFirebaseConfig = {
             apiKey: "AIzaSyBitkDr3o8hJBh-lm5tZntwmKhTWiSPEpk",
             authDomain: "mein-sweeper-d5995.firebaseapp.com",

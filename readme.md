@@ -25,8 +25,11 @@ firebase deploy
 * [webpack](https://webpack.js.org/guides/getting-started/) - to run bundling of js
 
 ```npm
-# install
+# install web pack things
 npm install -g webpack webpack-cli
+
+# from the root of the project, install webpack-merge
+npm install --save-dev webpack-merge
 
 # run the bundling
 webpack
