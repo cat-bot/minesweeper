@@ -1,5 +1,6 @@
 import { MinesweeperGameCell } from "./minesweepergamecell.js";
 import { MINESWEEPER_GAME_COMPLETION_STATES } from "./minesweeperconstants.js";
+import { default as _ } from '../coreapp/lodashpolyfill.js';
 
 export class MinesweeperGameState {
     constructor(size, logutil) {
@@ -41,7 +42,7 @@ export class MinesweeperGameState {
         let mines = _.sampleSize(_.range(0, this._size.width*this._size.height - 1), this._size.mines);
 
         for (let k = 0; k < mines.length; k++) {
-            let rowIndex = _.floor(mines[k]/this._size.width);
+            let rowIndex = Math.floor(mines[k]/this._size.width);
             let colIndex = mines[k] % this._size.width;
             let mineCell = this._lookup[`${rowIndex + "_" + colIndex}`];
 
@@ -51,7 +52,7 @@ export class MinesweeperGameState {
 
         // update adjacent mine count by iterating all mines
         for (let k = 0; k < mines.length; k++) {
-            let rowIndex = _.floor(mines[k]/this._size.width);
+            let rowIndex = Math.floor(mines[k]/this._size.width);
             let colIndex = mines[k] % this._size.width;
 
             let otherCoords = this.GenerateAdjacentCells(rowIndex, colIndex);
@@ -146,32 +147,34 @@ export class MinesweeperGameState {
 
     RevealAllMines () {
         let that = this;
-        _.forEach(this._mineCells, function(cell) {
-            if (!cell.IsRevealed)
-                cell.SetIsRevealed();
-                that.FireCellStateChange(cell);
-        });
+        for(let i = 0; i < this._mineCells.length; i++) {
+            if (!this._mineCells[i].IsRevealed)
+                this._mineCells[i].SetIsRevealed();
+                that.FireCellStateChange(this._mineCells[i]);
+        }
     }
 
     AttemptAutoFill(cell) {
         let autoFills = this.GetAdjacentNonMineNonRevealedCells(cell);
         let that = this;
 
-        _.forEach(autoFills, function(c) {
-            that.SelectCell(c);
-        });
+        for(let i = 0; i < autoFills.length; i++) {
+            that.SelectCell(autoFills[i]);
+        }
     }
 
     GetAdjacentNonMineNonRevealedCells(cell) {
         let that = this;
         let adjCellIndices = this.GenerateAdjacentCells(cell.rowIndex, cell.colIndex);
         let adjCells = [];
-        _.forEach(adjCellIndices, function(c) {
+
+        for(let i = 0; i < adjCellIndices.length; i++) {
+            let c = adjCellIndices[i];
             let adjacentCell = that.CellById(`${c.y + "_" + c.x}`);
 
             if (!adjacentCell.IsMine && !adjacentCell.IsRevealed)
                 adjCells.push(adjacentCell);
-        });
+        }
 
         return adjCells;
     }
@@ -272,12 +275,14 @@ export class MinesweeperGameState {
         if (!this.GameIsPlayable)
             return;
 
-        let allCells = _.flatten(this._cells);
-        let that = this;
-        _.forEach(allCells, function(c) {
-            if (!c.IsMine)
-                that.SelectCell(c);
-        });
+        for(let i = 0; i < this._cells.length; i++) {
+           let innerArray = this._cells[i];
+
+           for(let j = 0; j < innerArray.length; j++) {
+                if (!innerArray[j].IsMine)
+                    this.SelectCell(innerArray[j]);
+           }
+        }
     }
 
     TriggerAutoLose() {

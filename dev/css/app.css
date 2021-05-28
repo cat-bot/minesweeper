@@ -164,6 +164,10 @@
   color: black;
 }
 
+.error-container {
+  background-color: #f7f7fb;
+}
+
 .app-main {
   width: 100%;
 }

@@ -1,7 +1,7 @@
 import { GoogleAuthHandler } from './googleauthhandler.js';
 
 export class Navigation {
-    constructor($) {
+    constructor() {
         this.loginUI = $("#login-ui-container");
         let that = this;
 
@@ -22,7 +22,6 @@ export class Navigation {
                 .find("#login-profile")
                 .find('img')
                 .prop('src', oAuthUser.photoURL)
-                .prop('alt', 'logged in as ' + oAuthUser.displayName)
                 .end()
                 .toggleClass('d-none')
                 .end()
@@ -37,7 +36,6 @@ export class Navigation {
                 .find("#login-profile")
                 .find('img')
                 .prop('src', '')
-                .prop('alt', '')
                 .end()
                 .toggleClass('d-none')
                 .end()

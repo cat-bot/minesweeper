@@ -77,7 +77,9 @@ export class MinesweeperGameGrid {
         });
     }
 
-    Start() {
+    Mount() {
+        this.logUtil.Log("mount minesweepergrid");
+
         // remove any existing handlers
         this.RemoveHandlers();
 
@@ -122,5 +124,11 @@ export class MinesweeperGameGrid {
 
         // bind handlers
         this.AddHandlers();
+    }
+
+    UnMount() {
+        this.logUtil.Log("unmount minesweepergrid");
+        this.RemoveHandlers();
+        this.$rootElement.html(''); 
     }
 }
