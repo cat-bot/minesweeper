@@ -17,6 +17,10 @@ export class MinesweeperGameState {
         this._totalCellCountToWin = size.width*size.height - size.mines;
         this._currentCellCount = 0;
 
+        // tracking start time
+        this.starttime = undefined;
+        this.stoptime = undefined;
+
         // for diabling the game
         this._gameDisabled = false;
 
@@ -215,6 +219,11 @@ export class MinesweeperGameState {
     SelectCell(cell) {
         this._util.Log(`select cell id ${cell.Id}`);
 
+        if (this.starttime === undefined) {
+            // record millis start time
+            this.starttime = Date.now();
+        }
+
         if (!this.GameIsPlayable) {
             // don't do anything
             this._util.Log(`game has already been ${this._gameCompletionState == MINESWEEPER_GAME_COMPLETION_STATES.completed ? "won!" : "lost!"}`);
@@ -229,14 +238,15 @@ export class MinesweeperGameState {
             this.FireCellStateChange(cell);
 
             if (cell.IsMine) {
-                // oh ohh, lost
+                // oh ohh, lost, so stop the clock
+                this.stoptime = Date.now();
 
                 // mark this mine as the one hit
                 cell.SetIsLosingMine();
                 this.GameCompletionState = MINESWEEPER_GAME_COMPLETION_STATES.failed;
                 this.RevealAllMines();
                 this.GameDisabled = true;
-                this._util.Log(`player has lost!`);
+                this._util.Log(`player has lost in ${this.stoptime - this.starttime}`);
                 this.FireGameCompletionStateChange();
 
                 return;
@@ -248,10 +258,11 @@ export class MinesweeperGameState {
                 // check if player has won
                 if (this._currentCellCount == this._totalCellCountToWin) {
                     // yay
+                    this.stoptime = Date.now();
                     this.GameCompletionState = MINESWEEPER_GAME_COMPLETION_STATES.completed;
                     this.RevealAllMines();                
                     this.GameDisabled = true;
-                    this._util.Log(`player has won!`);
+                    this._util.Log(`player has won in ${this.stoptime - this.starttime}`);
                     this.FireGameCompletionStateChange();
                     return;
                 }
