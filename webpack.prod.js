@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 
-module.exports = function() {
+module.exports = function(env) {
   let appTarget = "prod";
 
   return merge(common, {

@@ -6,40 +6,40 @@
 
 #### node/npm dependencies
 
-* [firebase cli](https://firebase.google.com/docs/cli?hl=en) - to run the deployment & run localhost static http server
+* [firebase cli](https://firebase.google.com/docs/cli?hl=en) - to run the prod deployment
+* [webpack](https://webpack.js.org/guides/getting-started/) - to run bundling & minifcation of js for both dev & prod
+* [sass]() - to run sass->css compilation & minification for prod
+
 
 ```npm
-# install firebase cli
+# install global things
 npm install -g firebase-tools
+npm install -g sass
+npm install -g webpack-cli
 
-# run local hosting (or use Live Server extension)
-firebase serve --only hosting
+# from the root of the project, install these two locally
+npm install --save-dev webpack
+npm install --save-dev webpack-merge
+```
 
+To run the firebase deployment, you need to first login:
+
+```npm
 # authenticate in order to deploy. only needs to be done once
 firebase login
 
-# deploy (or run the package-and-deploy.ps1 script)
+# deploy (or run the bundle-package-deploy.ps1 script)
 firebase deploy
 ```
 
-* [webpack](https://webpack.js.org/guides/getting-started/) - to run bundling of js
+To manually run the web pack bundling:
 
 ```npm
-# install web pack things
-npm install -g webpack-cli
-
-# from the root of the project, install webpack-merge
-npm install --save-dev webpack
-npm install --save-dev webpack-merge
-
-# run the bundling
+# run the bundling using the default config
 webpack
-```
 
-* [sass]()
-
-```npm
-npm install -g sass
+# using prod config
+webpack --config webpack.prod.js
 ```
 
 #### vscode extensions

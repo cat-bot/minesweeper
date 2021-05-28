@@ -7,7 +7,7 @@ write-host "sass transpile"
 sass 'src/sass/app.scss' 'deploy/css/app.css' -s compressed --no-source-map 
 
 ## copy a few other assets
-.\package.ps1
+.\copy-deploy-assets.ps1
 
 ## deploy
 write-host "firebase deploy"
