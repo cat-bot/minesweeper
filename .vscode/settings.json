@@ -3,13 +3,13 @@
        {
            "format": "expanded",
            "extensionName": ".css",
-           "savePath": "/css"
-       },
-       {
-           "extensionName": ".css",
-           "format": "compressed",
-           "savePath": "/deploy/css"
+           "savePath": "/dev//css"
        }
+    //    {
+    //        "extensionName": ".css",
+    //        "format": "compressed",
+    //        "savePath": "/deploy/css"
+    //    }
    ],
    "liveSassCompile.settings.excludeList": [
       "**/node_modules/**",

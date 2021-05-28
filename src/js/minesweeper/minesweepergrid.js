@@ -5,7 +5,7 @@ export class MinesweeperGameGrid {
         this.$rootElement = $rootElement;
         this.gameState = gameState;  
         this.logUtil = logUtil;
-    }
+    } 
 
     // methods
 
