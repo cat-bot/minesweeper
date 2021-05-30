@@ -1,31 +1,37 @@
 .bd-navbar {
+    
+    background: linear-gradient(50deg, #0008 70%, #fff4 40%);
     background-color: $app-theme-colour;
 
-    #login-ui-container {
-        background-color: $app-theme-accent-colour-light;
-        height: 45px;
-        width: 45px;
+    nav {
+        max-width: $max-outer-col-width;
 
-        -moz-transition: all .1s ease-in;
-        -o-transition: all .1s ease-in;
-        -webkit-transition: all .1s ease-in; 
-        transition: all .1s ease-in;
-
-        &:hover {
-            background-color:$app-theme-accent-colour-semilight;
-            color:$app-theme-accent-colour-light;
-        }
-
-        #login-profile {
-            height:100%;   
-
-            img {
-                height: 90%;
+        #login-ui-container {
+            background-color: $app-theme-accent-colour-light;
+            height: 45px;
+            width: 45px;
+    
+            -moz-transition: all .1s ease-in;
+            -o-transition: all .1s ease-in;
+            -webkit-transition: all .1s ease-in; 
+            transition: all .1s ease-in;
+    
+            &:hover {
+                background-color:$app-theme-accent-colour-semilight;
+                color:$app-theme-accent-colour-light;
             }
-        }
-
-        #login-prompt {
-            height:100%;
+    
+            #login-profile {
+                height:100%;   
+    
+                img {
+                    height: 90%;
+                }
+            }
+    
+            #login-prompt {
+                height:100%;
+            }
         }
     }
 }

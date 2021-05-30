@@ -17,7 +17,7 @@ class App {
 
     Mount() {
         new AppRouter(this.routes);
-        new Navigation();
+        new Navigation();       
     }
 }
 

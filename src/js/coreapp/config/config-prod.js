@@ -9,5 +9,6 @@ export const AppFirebaseConfig = {
 };
 
 export const EnvConfig = {
-    env: "prod"
+    env: "prod",
+    scores_collection: "pscores"
 };

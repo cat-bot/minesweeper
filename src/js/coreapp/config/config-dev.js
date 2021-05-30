@@ -8,5 +8,6 @@ export const AppFirebaseConfig = {
 };
 
 export const EnvConfig = {
-    env: "dev"
+    env: "dev",
+    scores_collection: "scores"
 };

@@ -20,6 +20,7 @@ export class MinesweeperGameState {
         // tracking start time
         this.starttime = undefined;
         this.stoptime = undefined;
+        this.elapsedTime = undefined;
 
         // for diabling the game
         this._gameDisabled = false;
@@ -88,6 +89,10 @@ export class MinesweeperGameState {
 
     get Id() {
         return this._id;
+    }
+
+    get ElapsedTime() {
+        return this.elapsedTime;
     }
 
     set GameCompletionState(gameCompletionState) {
@@ -246,7 +251,8 @@ export class MinesweeperGameState {
                 this.GameCompletionState = MINESWEEPER_GAME_COMPLETION_STATES.failed;
                 this.RevealAllMines();
                 this.GameDisabled = true;
-                this._util.Log(`player has lost in ${this.stoptime - this.starttime}`);
+                this.elapsedTime = this.stoptime - this.starttime;
+                this._util.Log(`player has lost in ${this.elapsedTime}`);
                 this.FireGameCompletionStateChange();
 
                 return;
@@ -262,7 +268,8 @@ export class MinesweeperGameState {
                     this.GameCompletionState = MINESWEEPER_GAME_COMPLETION_STATES.completed;
                     this.RevealAllMines();                
                     this.GameDisabled = true;
-                    this._util.Log(`player has won in ${this.stoptime - this.starttime}`);
+                    this.elapsedTime = this.stoptime - this.starttime;
+                    this._util.Log(`player has won in ${this.elapsedTime}`);
                     this.FireGameCompletionStateChange();
                     return;
                 }

@@ -14,10 +14,14 @@ $count-cell-five-foreground: purple;
 
 $app-theme-colour: #2c3361;
 $app-theme-accent-colour-light: lighten($app-theme-colour, 60%);
-$app-theme-accent-colour-semilight: lighten($app-theme-colour, 30%);
+$app-theme-accent-colour-semilight: lighten($app-theme-colour, 40%);
 $app-theme-accent-colour-superlight: lighten($app-theme-colour, 70%);
+
+$body-colour: #f2f2f2;
 
 // sizes
 $cell-size: 24px;
 $small-cell-size: 24px;
 $large-cell-size: 36px;
+
+$max-outer-col-width: 850px;
