@@ -1,6 +1,7 @@
 import { StatDb } from "../coreapp/statdb.js";
 import { MINESWEEPER_GAME_COMPLETION_STATES } from "./minesweeperconstants.js";
 import { MinesweeperScore } from "./minesweeperscore.js";
+import { UserUtil } from "../coreapp/userutil.js";
 
 export class MinesweeperGameGrid {
     constructor($rootElement, gameState, logUtil) {
@@ -121,8 +122,15 @@ export class MinesweeperGameGrid {
             if (gameCompletionState == MINESWEEPER_GAME_COMPLETION_STATES.completed) {
                 that.$rootElement.append("<div class='end-state'><img src='./img/win.gif'></img></div>");
                 
-                let score = new MinesweeperScore(that.gameState.Size.label, 'timmy', 'uid 123', that.gameState.ElapsedTime).PersistableData;
-                that.statDb.AddScore(score);
+                let userUtil = new UserUtil();
+                if (userUtil.IsLoggedIn) {
+                    let score = new MinesweeperScore(
+                        that.gameState.Size.label, 
+                        userUtil.User.displayName, 
+                        userUtil.User.uid, 
+                        that.gameState.ElapsedTime).PersistableData;
+                    that.statDb.AddScore(score);
+                }
             }
             
             if (gameCompletionState == MINESWEEPER_GAME_COMPLETION_STATES.failed) {
