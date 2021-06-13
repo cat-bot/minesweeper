@@ -11,6 +11,7 @@ export class MinesweeperGameState {
         this._mineCells = [];
         this._size = size; 
         this._gameCompletionState = MINESWEEPER_GAME_COMPLETION_STATES.started;
+        this._gameAutoWon = undefined;
         this._util = logutil;
 
         // track cleared cells vs total cells needed to win
@@ -83,6 +84,10 @@ export class MinesweeperGameState {
         return this._gameCompletionState == MINESWEEPER_GAME_COMPLETION_STATES.completed;
     }
 
+    get WonByAutoWin() {
+        return this._gameAutoWon === true;
+    }
+
     get Size() {
         return this._size;
     }
@@ -97,6 +102,10 @@ export class MinesweeperGameState {
 
     set GameCompletionState(gameCompletionState) {
         this._gameCompletionState = gameCompletionState;
+    }
+
+    set WonByAutoWin(wonByAutoWin) {
+        this._gameAutoWon = wonByAutoWin;
     }
 
     set OnCellStateChange(fn) {
@@ -292,6 +301,8 @@ export class MinesweeperGameState {
     TriggerAutoWin() {
         if (!this.GameIsPlayable)
             return;
+
+        this.WonByAutoWin = true;
 
         for(let i = 0; i < this._cells.length; i++) {
            let innerArray = this._cells[i];

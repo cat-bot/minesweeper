@@ -122,14 +122,22 @@ export class MinesweeperGameGrid {
             if (gameCompletionState == MINESWEEPER_GAME_COMPLETION_STATES.completed) {
                 that.$rootElement.append("<div class='end-state'><img src='./img/win.gif'></img></div>");
                 
+                if (that.gameState.WonByAutoWin) {
+                    // no score for you
+                    that.logUtil.Log("no score submitted");
+                    return;
+                }
+
                 let userUtil = new UserUtil();
                 if (userUtil.IsLoggedIn) {
+                    that.logUtil.Log("submit score");
                     let score = new MinesweeperScore(
                         that.gameState.Size.label, 
                         userUtil.User.displayName, 
                         userUtil.User.uid, 
                         that.gameState.ElapsedTime).PersistableData;
                     that.statDb.AddScore(score);
+                    that.logUtil.Log("score submitted");
                 }
             }
             

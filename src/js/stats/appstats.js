@@ -11,7 +11,7 @@ export class AppStats {
         this.pageSize = 10;
 
         this.template = `
-            <div class='app-container container-sm'>
+            <div class='app-container container-sm stats-container'>
                 <div class='row'>
                     <div class='col-12 p-1 p-sm-3 py-sm-2 g-sm-2'>
                         <table class="table table-striped table-borderless">
@@ -20,10 +20,10 @@ export class AppStats {
                                     <th scope="col">#</th>
                                     <th scope="col">user</th>
                                     <th scope="col">difficulty</th>
-                                    <th scope="col">time</th>
+                                    <th scope="col">time (s)</th>
                                 </tr>
                             </thead>
-                            <tbody id='${this.scoreGridId}'></tbody>
+                            <tbody id='${this.scoreGridId}' class='opacity-animation'></tbody>
                         </table>
                     </div>
                     <div class='col-12 p-1 p-sm-3 py-sm-2 g-sm-2 d-none content-justify-center' id='paging'>
@@ -58,7 +58,7 @@ export class AppStats {
         });
 
         // show the scores
-        $(`#${this.scoreGridId}`).html(stack.join(''));
+        $(`#${this.scoreGridId}`).html(stack.join('')).toggleClass('fadeIn');
 
         // show the paging, rebind handlers
         if (results.hasNext || results.hasPrev) {
