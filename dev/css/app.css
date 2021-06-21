@@ -1,0 +1,242 @@
+body {
+  background: #f2f2f2;
+}
+
+.app-container {
+  max-width: 850px;
+}
+
+.bd-navbar {
+  background: linear-gradient(50deg, #0008 70%, #fff4 40%);
+  background-color: #2c3361;
+}
+
+.bd-navbar nav {
+  max-width: 850px;
+}
+
+.bd-navbar nav #login-ui-container {
+  background-color: #d4d7eb;
+  height: 45px;
+  width: 45px;
+  -webkit-transition: all .1s ease-in;
+  transition: all .1s ease-in;
+}
+
+.bd-navbar nav #login-ui-container:hover {
+  background-color: #8d96cc;
+  color: #d4d7eb;
+}
+
+.bd-navbar nav #login-ui-container #login-profile {
+  height: 100%;
+}
+
+.bd-navbar nav #login-ui-container #login-profile img {
+  height: 90%;
+}
+
+.bd-navbar nav #login-ui-container #login-profile img.opacity-animation {
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.bd-navbar nav #login-ui-container #login-profile img.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+
+.bd-navbar nav #login-ui-container #login-prompt {
+  height: 100%;
+}
+
+.grid-container .grid .end-state {
+  text-align: center;
+}
+
+.grid-container .grid .end-state img {
+  margin: 20px auto;
+  width: 90%;
+  max-width: 320px;
+}
+
+.grid-container .grid table {
+  border: 2px solid #a2a2a2;
+  border-collapse: collapse;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #ebebeb;
+}
+
+.grid-container .grid table.beginner .cell {
+  height: 36px;
+  width: 36px;
+  min-width: 36px;
+  min-height: 36px;
+}
+
+.grid-container .grid table.beginner .cell-inner {
+  padding-top: 4px;
+}
+
+.grid-container .grid table.intermediate .cell {
+  height: 24px;
+  width: 24px;
+  min-width: 24px;
+  min-height: 24px;
+}
+
+.grid-container .grid table.intermediate .cell-inner {
+  font-size: 0.8em;
+}
+
+.grid-container .grid table.expert .cell {
+  height: 24px;
+  width: 24px;
+  min-width: 24px;
+  min-height: 24px;
+}
+
+.grid-container .grid table.expert .cell-inner {
+  font-size: 0.7em;
+}
+
+.grid-container .grid table .cell {
+  border: 1px solid #a2a2a2;
+  padding: 0;
+}
+
+.grid-container .grid table .cell .cell-inner {
+  height: 100%;
+  width: 100%;
+  border: 1px solid white;
+}
+
+.grid-container .grid table .cell.hidden {
+  background-color: #cbcbcb;
+}
+
+.grid-container .grid table .cell.hidden .cell-inner {
+  border: 1px solid;
+  border-top-color: white;
+  border-left-color: white;
+  border-right-color: #7f7f7f;
+  border-bottom-color: #7f7f7f;
+}
+
+.grid-container .grid table .cell.hidden.marked .cell-inner:before {
+  font-weight: bold;
+  content: "!";
+}
+
+.grid-container .grid table .cell.mine {
+  background-color: #ebebeb;
+}
+
+@-webkit-keyframes redpulse {
+  0% {
+    background-color: #ebebeb;
+  }
+  100% {
+    background-color: red;
+  }
+}
+
+@keyframes redpulse {
+  0% {
+    background-color: #ebebeb;
+  }
+  100% {
+    background-color: red;
+  }
+}
+
+.grid-container .grid table .cell.mine.triggered {
+  background-color: red;
+  -webkit-animation-name: redpulse;
+          animation-name: redpulse;
+  -webkit-animation-duration: 0.15s;
+          animation-duration: 0.15s;
+}
+
+.grid-container .grid table .cell.open-1 {
+  color: blue;
+}
+
+.grid-container .grid table .cell.open-2 {
+  color: green;
+}
+
+.grid-container .grid table .cell.open-3 {
+  color: red;
+}
+
+.grid-container .grid table .cell.open-4 {
+  color: darkblue;
+}
+
+.grid-container .grid table .cell.open-5 {
+  color: purple;
+}
+
+.grid-container .grid table .cell.open-6, .grid-container .grid table .cell.open-7, .grid-container .grid table .cell.open-8 {
+  color: black;
+}
+
+.error-container {
+  background-color: #f7f7fb;
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.stats-container .opacity-animation {
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.stats-container .opacity-animation.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+
+.app-main {
+  width: 100%;
+}
